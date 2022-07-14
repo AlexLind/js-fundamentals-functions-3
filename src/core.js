@@ -6,11 +6,13 @@
 // or "You didn't set a timer!" if no value is provided to the parameter
 
 function timerStatus(remainingMin) {
-    if (typeof remainingMin === 'number') {
-         if (remainingMin === 0) {
-            return "Phil's cake is ready!"
-         } return "The cake is still baking!"
-    } return "You didn't set a timer!"  
+  if (typeof remainingMin === 'number') {
+    if (remainingMin === 0) {
+      return "Phil's cake is ready!"
+    }
+    return 'The cake is still baking!'
+  }
+  return "You didn't set a timer!"
 }
 
 // 2. To help Phil prepare ahead of time, create a function named estimatePrepTime
@@ -23,12 +25,11 @@ function timerStatus(remainingMin) {
 // takes 2 minutes to prepare
 
 function estimatePrepTime(ingredients, prepTimeInMin) {
-    if (typeof prepTimeInMin === 'number') {
-        return ingredients.length * prepTimeInMin
-    }   
-    return ingredients.length * 2 
+  if (typeof prepTimeInMin === 'number') {
+    return ingredients.length * prepTimeInMin
+  }
+  return ingredients.length * 2
 }
-
 
 // 3. Phil needs to know the quantity of milk and eggs to use! Create a function
 // named calculateQuantities which accepts two parameters:
@@ -47,19 +48,19 @@ function estimatePrepTime(ingredients, prepTimeInMin) {
 // returns: { sugar: 0, eggs: 6 }
 
 function calculateQuantities(ingredients, layers) {
-    const quant = {
-        sugar: 0,
-        eggs:  0
-    }
-    if (ingredients.includes('eggs')) {
-        quant.eggs = 2 * layers
-    } if (ingredients.includes('sugar'))
-        quant.sugar = 100 * layers
+  const quant = {
+    sugar: 0,
+    eggs: 0
+  }
+  if (ingredients.includes('eggs')) {
+    quant.eggs = 2 * layers
+  }
+  if (ingredients.includes('sugar')) quant.sugar = 100 * layers
 
-    return quant
+  return quant
 }
 
-console.log(calculateQuantities(["sugar", "milk", "eggs"], 2))
+// console.log(calculateQuantities(['sugar', 'milk', 'eggs'], 2))
 
 // 4. Phil's cake is pretty small and only provides 1 portion. He wants to make a bigger one!
 // Create a function named improveRecipe that accepts two parameters:
@@ -74,21 +75,31 @@ console.log(calculateQuantities(["sugar", "milk", "eggs"], 2))
 // improveRecipe({ eggs: 2, milk: 100, sugar: 200 }, 3)
 // returns: { eggs: 6, milk: 300, sugar: 600 }
 
-function improveRecipe (object, portions) {
-    if (typeof object === 'object') {
-       Object.keys(object).forEach(function (item) {
-         item += portions
-       })
-    } return 'Need to be a object'
+// function improveRecipe(object, portions) {
+//   if (typeof object === 'object') {
+//     Object.keys(object).forEach(function (item) {
+//       item *= portions
+//     })
+//   }
+//   return 'Need to be a object'
+// }
+
+const ingredients = { eggs: 2, milk: 100, sugar: 200 }
+
+function improveRecipe(ingredients, portions) {
+  Object.entries(ingredients).forEach(
+    (ingredient) => (ingredients[ingredient[0]] *= portions)
+  )
+  return ingredients
 }
 
-console.log(improveRecipe({ eggs: 2, milk: 100, sugar: 200 }, 3))
+console.log(improveRecipe(ingredients, 3))
 
 // typeof object === 'object'
 // Don't change the code below this line
 module.exports = {
-    timerStatus,
-    estimatePrepTime,
-    calculateQuantities,
-    // improveRecipe
+  timerStatus,
+  estimatePrepTime,
+  calculateQuantities,
+  improveRecipe
 }
