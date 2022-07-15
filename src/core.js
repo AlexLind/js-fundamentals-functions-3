@@ -87,8 +87,8 @@ function calculateQuantities(ingredients, layers) {
 const ingredients = { eggs: 2, milk: 100, sugar: 200 }
 
 function improveRecipe(ingredients, portions) {
-  Object.entries(ingredients).forEach(
-    (ingredient) => (ingredients[ingredient[0]] *= portions)
+  Object.keys(ingredients).forEach(
+    (ingredient) => (ingredients[ingredient] *= portions)
   )
   return ingredients
 }
