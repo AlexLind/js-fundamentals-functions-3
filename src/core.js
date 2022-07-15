@@ -5,14 +5,20 @@
 // "The cake is still baking!" if there are any remaining minutes left,
 // or "You didn't set a timer!" if no value is provided to the parameter
 
-function timerStatus(remainingMin) {
-  if (typeof remainingMin === 'number') {
-    if (remainingMin === 0) {
-      return "Phil's cake is ready!"
-    }
-    return 'The cake is still baking!'
+function timerStatus(remainingMinutes) {
+  if (
+    remainingMinutes < 0 ||
+    remainingMinutes === undefined ||
+    typeof remainingMinutes !== 'number'
+  ) {
+    return "You didn't set a timer!"
   }
-  return "You didn't set a timer!"
+
+  if (remainingMinutes === 0) {
+    return "Phil's cake is ready!"
+  }
+
+  return 'The cake is still baking!'
 }
 
 // 2. To help Phil prepare ahead of time, create a function named estimatePrepTime
@@ -24,11 +30,8 @@ function timerStatus(remainingMin) {
 // If no prep time per ingredient is provided, the function should assume each ingredient
 // takes 2 minutes to prepare
 
-function estimatePrepTime(ingredients, prepTimeInMin) {
-  if (typeof prepTimeInMin === 'number') {
-    return ingredients.length * prepTimeInMin
-  }
-  return ingredients.length * 2
+function estimatePrepTime(ingredients, prepTimePerIngredient = 2) {
+  return ingredients.length * prepTimePerIngredient
 }
 
 // 3. Phil needs to know the quantity of milk and eggs to use! Create a function
@@ -48,16 +51,18 @@ function estimatePrepTime(ingredients, prepTimeInMin) {
 // returns: { sugar: 0, eggs: 6 }
 
 function calculateQuantities(ingredients, layers) {
-  const quant = {
+  const recipe = {
     sugar: 0,
     eggs: 0
   }
-  if (ingredients.includes('eggs')) {
-    quant.eggs = 2 * layers
+  if (ingredients.includes('sugar')) {
+    recipe.sugar = 100 * layers
   }
-  if (ingredients.includes('sugar')) quant.sugar = 100 * layers
+  if (ingredients.includes('eggs')) {
+    recipe.eggs = 2 * layers
+  }
 
-  return quant
+  return recipe
 }
 
 // console.log(calculateQuantities(['sugar', 'milk', 'eggs'], 2))
@@ -75,28 +80,19 @@ function calculateQuantities(ingredients, layers) {
 // improveRecipe({ eggs: 2, milk: 100, sugar: 200 }, 3)
 // returns: { eggs: 6, milk: 300, sugar: 600 }
 
-// function improveRecipe(object, portions) {
-//   if (typeof object === 'object') {
-//     Object.keys(object).forEach(function (item) {
-//       item *= portions
-//     })
-//   }
-//   return 'Need to be a object'
-// }
-
-const ingredients = { eggs: 2, milk: 100, sugar: 200 }
-
 function improveRecipe(ingredients, portions) {
-  Object.keys(ingredients).forEach(
-    (ingredient) => (ingredients[ingredient] *= portions)
-  )
+  const keys = Object.keys(ingredients)
+  console.log(keys)
+
+  keys.forEach(function multiplyKey(ingredient) {
+    ingredients[ingredient] *= portions
+  })
   return ingredients
 }
 
-console.log(improveRecipe(ingredients, 3))
-
-// typeof object === 'object'
+console.log(improveRecipe({ eggs: 2, milk: 100, sugar: 200 }, 3))
 // Don't change the code below this line
+
 module.exports = {
   timerStatus,
   estimatePrepTime,
